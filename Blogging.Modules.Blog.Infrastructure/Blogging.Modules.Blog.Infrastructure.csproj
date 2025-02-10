@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blogging.Common.Infrastructure\Blogging.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\Blogging.Modules.Blog.Domain\Blogging.Modules.Blog.Domain.csproj" />
+    <ProjectReference Include="..\Blogging.Modules.Blog.Presentation\Blogging.Modules.Blog.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>

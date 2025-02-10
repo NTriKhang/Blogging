@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blogging.Common.Application\Blogging.Common.Application.csproj" />
+    <ProjectReference Include="..\Blogging.Modules.Users.Domain\Blogging.Modules.User.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Users\GetAuthCode\" />
+  </ItemGroup>
+
+</Project>

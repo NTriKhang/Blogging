@@ -1,0 +1,35 @@
+services:
+  blogging.api:
+    image: ${DOCKER_REGISTRY-}bloggingapi
+    container_name: Blogging.API
+    build:
+      context: .
+      dockerfile: Blogging.Api/Dockerfile
+    ports:
+      - 5000:8080
+      - 5001:8081
+
+  blogging.database:
+    image: postgres:latest
+    container_name: Blogging.Database
+    environment:
+      - POSTGRES_DB=blogging
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  blogging.identity:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: Blogging.Identity
+    command: start-dev #--import-realm
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    volumes:
+      - ./.containers/identity:/opt/keycloak/data
+      - ./.files:/opt/keycloak/data/import
+    ports:
+      - 18080:8080
