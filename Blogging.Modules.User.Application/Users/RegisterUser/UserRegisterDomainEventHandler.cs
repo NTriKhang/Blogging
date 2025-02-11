@@ -9,7 +9,7 @@ using Blogging.Modules.User.Application.Users.GetUser;
 using Blogging.Common.Domain;
 using MassTransit;
 using Blogging.Common.Application.EventBus;
-using Blogging.Modules.User.Domain.Users.IntegrationEvents;
+using Blogging.Modules.User.IntegrationEvent;
 
 namespace Blogging.Modules.User.Application.Users.RegisterUser
 {

@@ -1,27 +1,19 @@
 ﻿using Blogging.Common.Infrastructure.Outbox;
 using Blogging.Modules.User.Application.Abtractions.Data;
 using Blogging.Modules.User.Application.Abtractions.Identity;
-using Blogging.Modules.User.Application.Users.RegisterUser;
 using Blogging.Modules.User.Domain.Users;
 using Blogging.Modules.User.Infrastructure.Database;
 using Blogging.Modules.User.Infrastructure.Identity;
 using Blogging.Modules.User.Infrastructure.Outbox;
 using Blogging.Modules.User.Infrastructure.Users;
-using FluentValidation;
-using MassTransit.Courier;
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using Quartz;
 using Scrutor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Blogging.Modules.User.Infrastructure
 {
@@ -30,6 +22,12 @@ namespace Blogging.Modules.User.Infrastructure
         public static IServiceCollection AddUsersModule(
             this IServiceCollection services
             , IConfiguration configuration)
+        {
+            services.AddInfrastructure(configuration);
+
+            return services;
+        }
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IIdentityProviderService, IdentityProviderService>();
 
@@ -61,8 +59,6 @@ namespace Blogging.Modules.User.Infrastructure
             });
 
             services.Decorate(typeof(INotificationHandler<>), typeof(IdempotentDomainEventHandler<>));
-
-            return services;
         }
         public static IImplementationTypeSelector RegisterHandlers(this IImplementationTypeSelector selector, Type type)
         {

@@ -1,6 +1,7 @@
 ﻿using Blogging.Common.Application.Data;
 using Blogging.Common.Domain;
 using Blogging.Common.Infrastructure.Outbox;
+using Blogging.Modules.User.Infrastructure.Database;
 using Dapper;
 using MediatR;
 using System;
@@ -37,8 +38,8 @@ namespace Blogging.Modules.User.Infrastructure.Outbox
             try
             {
                 const string sql =
-                """
-                INSERT INTO "users"."OutboxMessageConsumer"("Id", "Name")
+                $"""
+                INSERT INTO "{Schemas.Users}"."OutboxMessageConsumer"("Id", "Name")
                 VALUES (@Id, @Name)
                 """;
 
@@ -55,10 +56,10 @@ namespace Blogging.Modules.User.Infrastructure.Outbox
             , OutboxMessageConsumer consumer)
         {
             string sql = 
-                """
+                $"""
                 SELECT EXISTS (
                     SELECT 1
-                    FROM "users"."OutboxMessageConsumer"
+                    FROM "{Schemas.Users}"."OutboxMessageConsumer"
                     WHERE "Id" = @Id AND "Name" = @Name
                 )
                 """;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Blogging.Modules.User.Infrastructure;
 using Blogging.Modules.User.Infrastructure.Database;
+using Blogging.Modules.Blog.Infrastructure.Database;
 using FluentValidation;
 
 namespace Blogging.Api.Extensions
@@ -11,6 +12,7 @@ namespace Blogging.Api.Extensions
         {
             using IServiceScope scope = builder.ApplicationServices.CreateScope();
             ApplyMigration<UserDbContext>(scope);
+            ApplyMigration<BlogDbContext>(scope);
         }
         private static void ApplyMigration<TDbContext>(IServiceScope scope) where TDbContext : DbContext
         {

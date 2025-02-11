@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blogging.Common.Infrastructure\Blogging.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\Blogging.Modules.Blog.Infrastructure\Blogging.Modules.Blog.Infrastructure.csproj" />
     <ProjectReference Include="..\Blogging.Modules.User.Infrastructure\Blogging.Modules.User.Infrastructure.csproj" />
   </ItemGroup>
 

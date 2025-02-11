@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blogging.Modules.User.Domain.Users;
-using Blogging.Modules.User.Domain.Users.IntegrationEvents;
 using Blogging.Common.Application.EventBus;
+using Blogging.Modules.User.IntegrationEvent;
 
 namespace Blogging.Modules.User.Application.Users.UpdateProfile
 {

@@ -5,6 +5,8 @@ using Blogging.Api.Extensions;
 using Microsoft.OpenApi.Models;
 using FluentValidation;
 using Blogging.Modules.User.Application.Users.RegisterUser;
+using Blogging.Common.Application;
+using Blogging.Modules.Blog.Infrastructure;
 internal class Program
 {
     private static void Main(string[] args)
@@ -13,12 +15,17 @@ internal class Program
 
         builder.Services.AddEndpointsApiExplorer();
 
+        builder.Services.AddApplication(
+            [Blogging.Modules.User.Application.AssemblyReference.Assembly
+            , Blogging.Modules.Blog.Application.AssemblyReference.Assembly]);
+
         builder.Services.AddInfrastructure(
-            []
-            ,builder.Configuration.GetConnectionString("Database")!
-            , [Blogging.Modules.User.Application.AssemblyReference.Assembly]);
+            [Blogging.Modules.Blog.Infrastructure.BlogModule.AddConsumers]
+            ,builder.Configuration.GetConnectionString("Database")!);
+
 
         builder.Services.AddUsersModule(builder.Configuration);
+        builder.Services.AddBlogModule(builder.Configuration);
 
         builder.Services.AddSwaggerGen(c =>
         {

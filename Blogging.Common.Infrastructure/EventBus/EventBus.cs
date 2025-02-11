@@ -1,5 +1,4 @@
 ﻿using Blogging.Common.Application.EventBus;
-using Blogging.Common.Domain;
 using MassTransit;
 using System;
 using System.Collections.Generic;

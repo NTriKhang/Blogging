@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogging.Modules.Blog.Prese
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogging.Modules.Blog.Infrastructure", "Blogging.Modules.Blog.Infrastructure\Blogging.Modules.Blog.Infrastructure.csproj", "{820CDAA8-0FB9-4B23-8119-D5F666927D34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogging.Modules.User.IntegrationEvent", "..\Blogging.Modules.User.IntegrationEvent\Blogging.Modules.User.IntegrationEvent.csproj", "{AC6A9668-D292-41CC-ACB2-48E422C871DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -110,6 +112,10 @@ Global
 		{820CDAA8-0FB9-4B23-8119-D5F666927D34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{820CDAA8-0FB9-4B23-8119-D5F666927D34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{820CDAA8-0FB9-4B23-8119-D5F666927D34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC6A9668-D292-41CC-ACB2-48E422C871DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC6A9668-D292-41CC-ACB2-48E422C871DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC6A9668-D292-41CC-ACB2-48E422C871DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC6A9668-D292-41CC-ACB2-48E422C871DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,5 +139,6 @@ Global
 		{4647E8B1-175B-40D2-A3DC-1EEB86CFDF06} = {EACD954B-410E-46AF-B599-AE4C4EC8D6A5}
 		{3E7E4215-EB86-4808-BCC3-ACE5852094E1} = {EACD954B-410E-46AF-B599-AE4C4EC8D6A5}
 		{820CDAA8-0FB9-4B23-8119-D5F666927D34} = {EACD954B-410E-46AF-B599-AE4C4EC8D6A5}
+		{AC6A9668-D292-41CC-ACB2-48E422C871DF} = {EBCA1E58-6A8D-4BEA-9D12-7C8D60A7A427}
 	EndGlobalSection
 EndGlobal

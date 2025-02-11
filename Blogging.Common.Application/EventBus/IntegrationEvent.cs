@@ -1,4 +1,4 @@
-﻿namespace Blogging.Common.Domain
+﻿namespace Blogging.Common.Application.EventBus
 {
     public class IntegrationEvent : IIntegrationEvent
     {

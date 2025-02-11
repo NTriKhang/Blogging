@@ -1,8 +1,11 @@
-﻿using Blogging.Common.Domain;
-
-namespace Blogging.Common.Application.EventBus
+﻿namespace Blogging.Common.Application.EventBus
 {
-    public interface IIntegrationEventHandler<TIntegrationEvent> where TIntegrationEvent : IIntegrationEvent
+    public interface IIntegrationEventHandler
+    {
+        Task Handle(IIntegrationEvent integrationEvent, CancellationToken cancellationToken = default);
+    }
+    public interface IIntegrationEventHandler<TIntegrationEvent> : IIntegrationEventHandler
+        where TIntegrationEvent : IIntegrationEvent
     {
         Task Handle(TIntegrationEvent integrationEvent, CancellationToken cancellationToken = default);
     }

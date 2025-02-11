@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Blogging.Modules.User.IntegrationEvent\Blogging.Modules.User.IntegrationEvent.csproj" />
     <ProjectReference Include="..\Blogging.Common.Application\Blogging.Common.Application.csproj" />
     <ProjectReference Include="..\Blogging.Modules.Users.Domain\Blogging.Modules.User.Domain.csproj" />
   </ItemGroup>

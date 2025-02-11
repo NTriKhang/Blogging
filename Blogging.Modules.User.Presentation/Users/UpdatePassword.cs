@@ -22,7 +22,7 @@ namespace Blogging.Modules.User.Presentation.Users
                 var res = await sender.Send(updateCommand);
 
                 return res.IsSuccess ? Results.NoContent() : Results.Problem(res.Error.Description);
-            });
+            }).WithTags(Tags.Users);
         }
         internal sealed class UpdatePasswordRequest
         {

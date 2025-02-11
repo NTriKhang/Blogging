@@ -1,6 +1,4 @@
-﻿using Blogging.Common.Domain;
-
-namespace Blogging.Common.Application.EventBus
+﻿namespace Blogging.Common.Application.EventBus
 {
     public interface IEventBus
     {

@@ -24,9 +24,8 @@ namespace Blogging.Common.Infrastructure
     public static class InfrastructureConfiguration
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services
-            , Action<IBusRegistrationConfigurator>[] moduleConfigureConsumers
-            , string dbConnectionString
-            , Assembly[] assemblies)
+            , Action<IRegistrationConfigurator>[] moduleConfigureConsumers
+            , string dbConnectionString)
         {
             services.AddAuthenticationInternal();
 
@@ -58,8 +57,6 @@ namespace Blogging.Common.Infrastructure
             services.TryAddSingleton<InsertOutboxMessagesinterceptor>();
 
             services.TryAddSingleton<IEventBus, EventBus.EventBus>();
-
-            services.AddApplication(assemblies);
 
             services.AddQuartz();
             services.AddQuartzHostedService(config => config.WaitForJobsToComplete = true);

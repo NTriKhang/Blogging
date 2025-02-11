@@ -1,5 +1,8 @@
-﻿using Blogging.Modules.Blog.Application.Abtractions.Data;
+﻿using Blogging.Common.Infrastructure.Inbox;
+using Blogging.Common.Infrastructure.Outbox;
+using Blogging.Modules.Blog.Application.Abtractions.Data;
 using Blogging.Modules.Blog.Domain.Users;
+using MassTransit.Middleware;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,12 +12,13 @@ using System.Threading.Tasks;
 
 namespace Blogging.Modules.Blog.Infrastructure.Database
 {
-    internal class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(options), IUnitOfWork
+    public class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(options), IUnitOfWork
     {
         internal DbSet<Reader> Readers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(Schema.Blog);
+            modelBuilder.ApplyConfiguration(new InboxMessageConfiguration());
         }
     }
 }

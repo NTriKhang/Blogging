@@ -7,12 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Blogging.Modules.User.IntegrationEvent\Blogging.Modules.User.IntegrationEvent.csproj" />
     <ProjectReference Include="..\Blogging.Common.Presentation\Blogging.Common.Presentation.csproj" />
     <ProjectReference Include="..\Blogging.Modules.Blog.Application\Blogging.Modules.Blog.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Users\" />
   </ItemGroup>
 
 </Project>
