@@ -9,3 +9,7 @@ a blogging system apply DDD pattern and Modular Monolith Architecture. I will se
 11/02/2025
 - I have implemented Inbox Message to ensure consumer will process receive message, logs something if it have an error, so now regist new user in User model will make a side effect to Blog module by create a new Reader in it schema.
 - Next: solve idempotency problem in the consumer.
+
+13/02/2025
+- Covering Inbox idempotency in Blog module, registing integration handler and decorator are a bit difference with Outbox.
+- Next: convert other basic CRUD usecase of blog module.
