@@ -51,6 +51,21 @@ namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
                     b.ToTable("InboxMessage", "Blog");
                 });
 
+            modelBuilder.Entity("Blogging.Common.Infrastructure.Inbox.InboxMessageConsumer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InboxMessageConsumer", "Blog");
+                });
+
             modelBuilder.Entity("Blogging.Modules.Blog.Domain.Users.Reader", b =>
                 {
                     b.Property<Guid>("Id")

@@ -17,8 +17,9 @@ namespace Blogging.Modules.Blog.Infrastructure.Database
         internal DbSet<Reader> Readers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema(Schema.Blog);
+            modelBuilder.HasDefaultSchema(Schemas.Blog);
             modelBuilder.ApplyConfiguration(new InboxMessageConfiguration());
+            modelBuilder.ApplyConfiguration(new InboxMessageConsumerConfiguration());
         }
     }
 }

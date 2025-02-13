@@ -30,7 +30,7 @@ namespace Blogging.Modules.Blog.Infrastructure.Inbox
 
             const string sql =
             $"""
-            INSERT INTO "{Schema.Blog}"."InboxMessage"("Id", "Type", "Content", "OccuredOnUtc")
+            INSERT INTO "{Schemas.Blog}"."InboxMessage"("Id", "Type", "Content", "OccuredOnUtc")
             VALUES (@Id, @Type, @Content::json, @OccuredOnUtc)
             """;
 

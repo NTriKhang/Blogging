@@ -65,7 +65,7 @@ namespace Blogging.Modules.Blog.Infrastructure.Inbox
         {
             const string sql =
             $"""
-            UPDATE "{Schema.Blog}"."InboxMessage"
+            UPDATE "{Schemas.Blog}"."InboxMessage"
             SET "ProcessedOnUtc" = @ProcessedOnUtc,
                 "Error" = @Error
             WHERE "Id" = @Id
@@ -90,7 +90,7 @@ namespace Blogging.Modules.Blog.Infrastructure.Inbox
              SELECT
                 "Id" AS {nameof(InboxMessageResponse.Id)},
                 "Content" AS {nameof(InboxMessageResponse.Content)}
-             FROM "{Schema.Blog}"."InboxMessage"
+             FROM "{Schemas.Blog}"."InboxMessage"
              WHERE "ProcessedOnUtc" IS NULL
              ORDER BY "OccuredOnUtc"
              LIMIT {inboxOptions.Value.BatchSize}
