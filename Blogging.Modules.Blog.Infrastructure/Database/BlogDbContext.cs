@@ -14,7 +14,7 @@ namespace Blogging.Modules.Blog.Infrastructure.Database
 {
     public class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(options), IUnitOfWork
     {
-        internal DbSet<Reader> Readers { get; set; }
+        internal DbSet<Domain.Users.User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(Schemas.Blog);

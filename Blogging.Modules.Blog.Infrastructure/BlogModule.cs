@@ -70,7 +70,7 @@ namespace Blogging.Modules.Blog.Infrastructure
             );
 
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<BlogDbContext>());
-            services.AddScoped<IReaderRepository, ReaderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.Configure<InboxOptions>(configuration.GetSection("Inbox"));
             services.ConfigureOptions<ConfigureProcessInboxJob>();

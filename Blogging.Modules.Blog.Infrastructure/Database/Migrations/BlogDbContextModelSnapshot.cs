@@ -66,7 +66,7 @@ namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
                     b.ToTable("InboxMessageConsumer", "Blog");
                 });
 
-            modelBuilder.Entity("Blogging.Modules.Blog.Domain.Users.Reader", b =>
+            modelBuilder.Entity("Blogging.Modules.Blog.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,7 +90,7 @@ namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Readers", "Blog");
+                    b.ToTable("Users", "Blog");
                 });
 #pragma warning restore 612, 618
         }

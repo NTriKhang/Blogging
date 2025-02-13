@@ -15,7 +15,7 @@ namespace Blogging.Modules.Blog.Presentation.Users
         public override async Task Handle(UserRegistedIntegrationEvent integrationEvent
             , CancellationToken cancellationToken = default)
         {
-            var createCreaderCommand = new CreateReaderCommand(integrationEvent.UserId
+            var createCreaderCommand = new CreateUserCommand(integrationEvent.UserId
                 , integrationEvent.UserName
                 , integrationEvent.DisplayName
                 , integrationEvent.ImageUrl
