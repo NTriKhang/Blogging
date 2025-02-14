@@ -13,3 +13,7 @@ a blogging system apply DDD pattern and Modular Monolith Architecture. I will se
 13/02/2025
 - Covering Inbox idempotency in Blog module, registing integration handler and decorator are a bit difference with Outbox.
 - Next: convert other basic CRUD usecase of blog module.
+
+14/02/2025
+- Glad that I done with the state pattern. Let see if it will be broken in future.
+- Next: redesign blog module.
