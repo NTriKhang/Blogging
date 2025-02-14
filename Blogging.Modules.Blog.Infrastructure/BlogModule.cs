@@ -1,7 +1,9 @@
 ﻿using Blogging.Common.Application.EventBus;
 using Blogging.Common.Infrastructure.Outbox;
 using Blogging.Modules.Blog.Application.Abtractions.Data;
+using Blogging.Modules.Blog.Domain.Blogs;
 using Blogging.Modules.Blog.Domain.Users;
+using Blogging.Modules.Blog.Infrastructure.Blogs;
 using Blogging.Modules.Blog.Infrastructure.Database;
 using Blogging.Modules.Blog.Infrastructure.Inbox;
 using Blogging.Modules.Blog.Infrastructure.Users;
@@ -71,6 +73,7 @@ namespace Blogging.Modules.Blog.Infrastructure
 
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<BlogDbContext>());
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBlogRepository, BlogRepository>();
 
             services.Configure<InboxOptions>(configuration.GetSection("Inbox"));
             services.ConfigureOptions<ConfigureProcessInboxJob>();

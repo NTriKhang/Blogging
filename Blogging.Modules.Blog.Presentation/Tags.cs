@@ -9,5 +9,6 @@ namespace Blogging.Modules.Blog.Presentation
     internal static class Tags
     {
         internal const string Users = "Users";
+        internal const string Blogs = "Blogs";
     }
 }

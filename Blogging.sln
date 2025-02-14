@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogging.Common.Presentatio
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B4BFDDAA-7031-417B-A4A6-4C2EA6208D9D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog", "Blog", "{EACD954B-410E-46AF-B599-AE4C4EC8D6A5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blogs", "Blogs", "{EACD954B-410E-46AF-B599-AE4C4EC8D6A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blogging.Modules.Blog.Domain", "Blogging.Modules.Blog.Domain\Blogging.Modules.Blog.Domain.csproj", "{7365DDB8-6F09-4C9F-866E-126BDF08AC14}"
 EndProject

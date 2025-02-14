@@ -34,7 +34,8 @@ internal class Program
 
         var app = builder.Build();
 
-        app.MapEndpoint([Blogging.Modules.User.Presentation.AssemblyReference.Assembly]);
+        app.MapEndpoint([Blogging.Modules.User.Presentation.AssemblyReference.Assembly,
+            Blogging.Modules.Blog.Presentation.AssemblyReference.Assembly]);
 
         if (app.Environment.IsDevelopment())
         {

@@ -66,6 +66,48 @@ namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
                     b.ToTable("InboxMessageConsumer", "Blog");
                 });
 
+            modelBuilder.Entity("Blogging.Modules.Blog.Domain.Blogs.Blog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Dislike")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Like")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blogs", "Blog");
+                });
+
             modelBuilder.Entity("Blogging.Modules.Blog.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
