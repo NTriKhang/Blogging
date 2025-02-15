@@ -2,13 +2,14 @@
 {
     public class ReviewState : BlogStateBase
     {
-        public ReviewState()
+        public ReviewState(BlogState state) : base(state)
         {
-            _state = BlogState.Review;
         }
+
         public override void UnPublish(Blog blog)
         {
-            blog.TransitionToState(new DraftState());
+            _state = BlogState.Draft;
+            blog.SetBlogState(_state);
         }
     }
 }

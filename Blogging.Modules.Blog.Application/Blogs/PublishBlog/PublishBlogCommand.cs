@@ -1,4 +1,5 @@
 ﻿using Blogging.Common.Application.Messaging;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

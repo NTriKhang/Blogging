@@ -2,9 +2,8 @@
 {
     public class ModifyingState : BlogStateBase
     {
-        public ModifyingState()
+        public ModifyingState(BlogState state) : base(state)
         {
-            _state = BlogState.Modifying;
         }
     }
 }

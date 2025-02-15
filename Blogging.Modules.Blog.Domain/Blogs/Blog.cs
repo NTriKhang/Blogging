@@ -3,6 +3,7 @@ using Blogging.Modules.Blog.Domain.Blogs.State;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,19 @@ namespace Blogging.Modules.Blog.Domain.Blogs
     public sealed class Blog : Entity
     {
         private IBlogState _blogState;
+        private IBlogState BlogStateInstance
+        {
+            get
+            {
+                if (_blogState == null)
+                    _blogState = BlogStateFactory.CreateState(this.State);
+                return _blogState;
+            }
+            set
+            {
+                _blogState = value;
+            }
+        }
         public Guid Id { get; private set; }
         public Guid UserId { get; private set; }
         public string Title { get; private set; } = string.Empty;
@@ -20,7 +34,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
         public string ThumbnailUrl { get; private set; } = string.Empty;
         public int Like { get; private set; }
         public int Dislike { get; private set; }
-        public string State { get; private set; } = string.Empty;
+        public BlogState State { get; private set; }
 
         public static Blog Create(
             Guid UserId
@@ -40,39 +54,39 @@ namespace Blogging.Modules.Blog.Domain.Blogs
                 ThumbnailUrl = ThumbnailUrl,
                 Like = 0,
                 Dislike = 0,
-                State = BlogState.Draft.ToString(),
-                _blogState = new DraftState()
+                State = BlogState.Draft,
+                _blogState = new DraftState(BlogState.Draft)
             };
             return blog;
         }
-        public void SetBlogState(IBlogState blogState)
+        public void SetBlogState(BlogState blogState)
         {
-            _blogState = blogState;
+            BlogStateInstance = BlogStateFactory.CreateState(blogState);
+            State = blogState;
         }
-        public void Publish()
+        public Result Publish()
         {
-            _blogState.Publish(this);
+            if (State == BlogState.Publish)
+                return Result.Failure(BlogErrors.BlogAlreadyPublic(Id));
+
+            BlogStateInstance.Publish(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
+            return Result.Success();
         }
         public void UnPublish()
         {
-            _blogState.UnPublish(this);
+            BlogStateInstance.UnPublish(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
         }
         public void Modify()
         {
-            _blogState.Modify(this);
+            BlogStateInstance.Modify(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
         }
         public void Hide()
         {
-            _blogState.Hide(this);
+            BlogStateInstance.Hide(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
-        }
-        internal void TransitionToState(IBlogState newState)
-        {
-            _blogState = newState;
-            State = _blogState.State.ToString();
         }
     }
 }

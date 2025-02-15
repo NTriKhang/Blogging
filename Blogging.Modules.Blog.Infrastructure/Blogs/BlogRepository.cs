@@ -14,8 +14,6 @@ namespace Blogging.Modules.Blog.Infrastructure.Blogs
         public async Task<Domain.Blogs.Blog?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var blog = await blogDbContext.Blogs.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
-            if (blog is not null)
-                blog.SetBlogState(BlogStateFactory.CreateState(Enum.Parse<BlogState>(blog.State)));
             return blog;
         }
         public void Insert(Domain.Blogs.Blog blog)

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace Blogging.Modules.Blog.Domain.Blogs
 {
     internal sealed class BlogStateUpdatedDomainEvent(
-        Guid blogId, string state) : DomainEvent
+        Guid blogId, BlogState state) : DomainEvent
     {
         public Guid BlogId { get; init; } = blogId;
-        public string State { get; init; } = state;
+        public BlogState State { get; init; } = state;
     }
 }

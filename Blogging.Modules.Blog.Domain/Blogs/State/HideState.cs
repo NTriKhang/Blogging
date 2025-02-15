@@ -2,9 +2,8 @@
 {
     public class HideState : BlogStateBase
     {
-        public HideState()
+        public HideState(BlogState state) : base(state)
         {
-            _state = BlogState.Hide;
         }
     }
 }

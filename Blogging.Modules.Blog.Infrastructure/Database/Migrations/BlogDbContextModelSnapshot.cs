@@ -66,6 +66,47 @@ namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
                     b.ToTable("InboxMessageConsumer", "Blog");
                 });
 
+            modelBuilder.Entity("Blogging.Common.Infrastructure.Outbox.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("OccuredOnUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ProcessedOnUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OutboxMessage", "Blog");
+                });
+
+            modelBuilder.Entity("Blogging.Common.Infrastructure.Outbox.OutboxMessageConsumer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id", "Name");
+
+                    b.ToTable("OutboxMessageConsumer", "Blog");
+                });
+
             modelBuilder.Entity("Blogging.Modules.Blog.Domain.Blogs.Blog", b =>
                 {
                     b.Property<Guid>("Id")

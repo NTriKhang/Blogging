@@ -20,8 +20,15 @@ namespace Blogging.Modules.Blog.Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(Schemas.Blog);
+            modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
+            modelBuilder.ApplyConfiguration(new OutboxMessageConsumerConfiguration());
             modelBuilder.ApplyConfiguration(new InboxMessageConfiguration());
             modelBuilder.ApplyConfiguration(new InboxMessageConsumerConfiguration());
+
+            modelBuilder
+                .Entity<Blog.Domain.Blogs.Blog>()
+                .Property(e => e.State)
+                .HasConversion<string>();
         }
     }
 }
