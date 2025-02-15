@@ -17,3 +17,7 @@ a blogging system apply DDD pattern and Modular Monolith Architecture. I will se
 14/02/2025
 - Glad that I done with the state pattern. Let see if it will be broken in future.
 - Next: redesign blog module.
+
+15/02/2025
+- Refactoring some code, not too much work for today.
+- Next: Keep work with blog module.
