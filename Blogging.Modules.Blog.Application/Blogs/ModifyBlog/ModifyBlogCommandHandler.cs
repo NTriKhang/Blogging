@@ -15,10 +15,12 @@ namespace Blogging.Modules.Blog.Application.Blogs.ModifyBlog
             if (blog == null)
                 return Result.Failure(BlogErrors.NotFound(request.Id));
 
-            blog.Modify();
+            var res = blog.Modify();
+            if (res.IsFailure)
+                return res;
             await unitOfWork.SaveChangesAsync();
 
-            return Result.Success();
+            return res;
         }
     }
 }

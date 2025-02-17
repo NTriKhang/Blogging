@@ -67,26 +67,43 @@ namespace Blogging.Modules.Blog.Domain.Blogs
         public Result Publish()
         {
             if (State == BlogState.Publish)
-                return Result.Failure(BlogErrors.BlogAlreadyPublic(Id));
+                return Result.Failure(BlogErrors.InvaldStateToProcess(Id, State, nameof(Publish)));
 
             BlogStateInstance.Publish(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
             return Result.Success();
         }
-        public void UnPublish()
+        public Result UnPublish()
         {
+            if (State == BlogState.Draft || State == BlogState.Modifying || State == BlogState.Hide)
+                return Result.Failure(BlogErrors.InvaldStateToProcess(Id, State, nameof(UnPublish)));
+
             BlogStateInstance.UnPublish(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
+            return Result.Success();
         }
-        public void Modify()
+        public Result Modify()
         {
+            if (State == BlogState.Draft 
+                || State == BlogState.Modifying 
+                || State == BlogState.Review)
+                return Result.Failure(BlogErrors.InvaldStateToProcess(Id, State, nameof(Modify)));
+
             BlogStateInstance.Modify(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
+            return Result.Success();
         }
-        public void Hide()
+        public Result Hide()
         {
+            if (State == BlogState.Draft 
+                || State == BlogState.Modifying 
+                || State == BlogState.Hide
+                || State == BlogState.Publish)
+                return Result.Failure(BlogErrors.InvaldStateToProcess(Id, State, nameof(Hide)));
+
             BlogStateInstance.Hide(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
+            return Result.Success();
         }
     }
 }

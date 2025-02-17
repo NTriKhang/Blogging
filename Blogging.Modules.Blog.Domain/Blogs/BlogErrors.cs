@@ -11,7 +11,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
     {
         public static Error NotFound(Guid Id) =>
             Error.NotFound("Blogs.NotFound", $"Blog with the identifier {Id} is not found");
-        public static Error BlogAlreadyPublic(Guid Id) =>
-            Error.Failure("Blogs.BlogAlreadyPublic", $"Blog with the identifier {Id} was already published");
+        public static Error InvaldStateToProcess(Guid Id, BlogState state, string action) =>
+            Error.Failure("Blogs.InvalidStateToProcess", $"Blog with the identifier {Id} is in state {state} and can't be {action}");
     }
 }

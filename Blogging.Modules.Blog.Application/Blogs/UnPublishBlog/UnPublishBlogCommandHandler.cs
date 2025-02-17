@@ -15,10 +15,12 @@ namespace Blogging.Modules.Blog.Application.Blogs.UnPublishBlog
             if (blog == null)
                 return Result.Failure(BlogErrors.NotFound(request.Id));
 
-            blog.UnPublish();
+            var res = blog.UnPublish();
+            if (res.IsFailure)
+                return res;
             await unitOfWork.SaveChangesAsync();
 
-            return Result.Success();
+            return res;
         }
     }
 }

@@ -15,10 +15,12 @@ namespace Blogging.Modules.Blog.Application.Blogs.HideBlog
             if (blog == null)
                 return Result.Failure(BlogErrors.NotFound(request.Id));
 
-            blog.Hide();
+            var res = blog.Hide();
+            if (res.IsFailure)
+                return res;
             await unitOfWork.SaveChangesAsync();
 
-            return Result.Success();
+            return res;
         }
     }
 }
