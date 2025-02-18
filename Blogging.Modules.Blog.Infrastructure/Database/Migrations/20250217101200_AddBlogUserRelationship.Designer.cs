@@ -3,6 +3,7 @@ using System;
 using Blogging.Modules.Blog.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    partial class BlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250217101200_AddBlogUserRelationship")]
+    partial class AddBlogUserRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,17 +28,17 @@ namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("BlogUser", b =>
                 {
-                    b.Property<Guid>("ContributedBlogsId")
+                    b.Property<Guid>("BlogContributorId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("ContributorsId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("ContributedBlogsId", "ContributorsId");
+                    b.HasKey("BlogContributorId", "ContributorsId");
 
                     b.HasIndex("ContributorsId");
 
-                    b.ToTable("BlogContributor", "Blog");
+                    b.ToTable("BlogUser", "Blog");
                 });
 
             modelBuilder.Entity("Blogging.Common.Infrastructure.Inbox.InboxMessage", b =>
@@ -195,7 +198,7 @@ namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
                 {
                     b.HasOne("Blogging.Modules.Blog.Domain.Blogs.Blog", null)
                         .WithMany()
-                        .HasForeignKey("ContributedBlogsId")
+                        .HasForeignKey("BlogContributorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

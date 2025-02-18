@@ -11,7 +11,7 @@ namespace Blogging.Modules.Blog.Application.Blogs.PublishBlog
     {
         public async Task<Result> Handle(PublishBlogCommand request, CancellationToken cancellationToken)
         {
-            var blog = await blogRepository.GetByIdAsync(request.Id, cancellationToken);
+            var blog = await blogRepository.GetByIdAsync(request.Id);
             if(blog == null) 
                 return Result.Failure(BlogErrors.NotFound(request.Id));
 

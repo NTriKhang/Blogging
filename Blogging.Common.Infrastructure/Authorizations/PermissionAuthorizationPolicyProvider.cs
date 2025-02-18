@@ -8,7 +8,7 @@ namespace Blogging.Common.Infrastructure.Authorizations
         AuthorizationOptions authorizationOptions;
         public PermissionAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options) : base(options)
         {
-           authorizationOptions = options.Value;
+            authorizationOptions = options.Value;
         }
         public override async Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
         {

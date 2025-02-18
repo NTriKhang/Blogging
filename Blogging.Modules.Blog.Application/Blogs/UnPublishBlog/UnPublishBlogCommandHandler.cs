@@ -11,7 +11,7 @@ namespace Blogging.Modules.Blog.Application.Blogs.UnPublishBlog
     {
         public async Task<Result> Handle(UnPublishBlogCommand request, CancellationToken cancellationToken)
         {
-            var blog = await blogRepository.GetByIdAsync(request.Id, cancellationToken);
+            var blog = await blogRepository.GetByIdAsync(request.Id);
             if (blog == null)
                 return Result.Failure(BlogErrors.NotFound(request.Id));
 

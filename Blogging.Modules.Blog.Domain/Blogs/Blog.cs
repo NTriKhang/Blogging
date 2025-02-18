@@ -1,5 +1,6 @@
 ﻿using Blogging.Common.Domain;
 using Blogging.Modules.Blog.Domain.Blogs.State;
+using Blogging.Modules.Blog.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
 {
     public sealed class Blog : Entity
     {
+        private readonly HashSet<Users.User> _contributors = new();
         private IBlogState _blogState;
         private IBlogState BlogStateInstance
         {
@@ -35,7 +37,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
         public int Like { get; private set; }
         public int Dislike { get; private set; }
         public BlogState State { get; private set; }
-
+        public IReadOnlyCollection<User> Contributors => _contributors;
         public static Blog Create(
             Guid UserId
             , string Title
@@ -103,6 +105,26 @@ namespace Blogging.Modules.Blog.Domain.Blogs
 
             BlogStateInstance.Hide(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
+            return Result.Success();
+        }
+        public Result AddContributor(User user)
+        {
+            if (_contributors.Contains(user))
+                return Result.Failure(BlogErrors.ContributorAlreadyExist(Id, user.Id));
+            _contributors.Add(user);
+
+            Raise(new BlogContributorAdded(Id, user.Id));
+
+            return Result.Success();
+        }
+        public Result RemoveContributor(User user)
+        {
+            if(!_contributors.Contains(user))
+                return Result.Failure(BlogErrors.ContributorDoesNotExist(Id, user.Id));
+            _contributors.Remove(user);
+
+            Raise(new BlogContributorRemoved(Id, user.Id));
+
             return Result.Success();
         }
     }

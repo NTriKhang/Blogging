@@ -8,7 +8,9 @@ namespace Blogging.Modules.Blog.Domain.Blogs
 {
     public interface IBlogRepository
     {
-        Task<Blog?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<Blog?> GetByIdAsync(Guid id
+            , bool includeContributor = false
+            , CancellationToken cancellationToken = default);
         void Insert(Blog user);
     }
 }

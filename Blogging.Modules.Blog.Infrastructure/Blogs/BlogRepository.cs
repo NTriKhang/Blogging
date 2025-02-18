@@ -11,9 +11,16 @@ namespace Blogging.Modules.Blog.Infrastructure.Blogs
 {
     internal class BlogRepository(BlogDbContext blogDbContext) : IBlogRepository
     {
-        public async Task<Domain.Blogs.Blog?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Domain.Blogs.Blog?> GetByIdAsync(Guid id
+            , bool includeContributor = false
+            , CancellationToken cancellationToken = default)
         {
-            var blog = await blogDbContext.Blogs.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+            IQueryable<Domain.Blogs.Blog> query = blogDbContext.Blogs;
+            if(includeContributor)
+            {
+                query = query.Include(x => x.Contributors);
+            }    
+            var blog = await query.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
             return blog;
         }
         public void Insert(Domain.Blogs.Blog blog)

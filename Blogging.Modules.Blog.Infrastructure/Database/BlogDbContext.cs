@@ -3,6 +3,7 @@ using Blogging.Common.Infrastructure.Outbox;
 using Blogging.Modules.Blog.Application.Abtractions.Data;
 using Blogging.Modules.Blog.Domain.Blogs;
 using Blogging.Modules.Blog.Domain.Users;
+using Blogging.Modules.Blog.Infrastructure.Blogs;
 using MassTransit.Middleware;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,6 +21,9 @@ namespace Blogging.Modules.Blog.Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(Schemas.Blog);
+
+            modelBuilder.ApplyConfiguration(new BlogConfiguration());
+
             modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
             modelBuilder.ApplyConfiguration(new OutboxMessageConsumerConfiguration());
             modelBuilder.ApplyConfiguration(new InboxMessageConfiguration());
