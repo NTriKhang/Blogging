@@ -28,6 +28,7 @@ namespace Blogging.Modules.Blog.Application.Blogs.GetBlogs
                  "Dislike" AS {nameof(BlogResponse.Dislike)},
                  "State" AS {nameof(BlogResponse.State)}
              FROM "Blog"."Blogs"
+             WHERE "IsPublicVisible" = true
              ORDER BY "UDate" DESC
              LIMIT @PageSize OFFSET @Offset
              """;
@@ -36,6 +37,7 @@ namespace Blogging.Modules.Blog.Application.Blogs.GetBlogs
             """
             SELECT COUNT(*) 
             FROM "Blog"."Blogs"
+            WHERE "IsPublicVisible" = true
             """;
 
             var parameters = new { PageSize = request.pageSize, Offset = (request.page - 1) * request.pageSize };

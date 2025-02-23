@@ -37,6 +37,8 @@ namespace Blogging.Modules.Blog.Domain.Blogs
         public int Like { get; private set; }
         public int Dislike { get; private set; }
         public BlogState State { get; private set; }
+        public bool IsInternalVisible { get; private set; }
+        public bool IsPublicVisible { get; private set; }
         public IReadOnlyCollection<User> Contributors => _contributors;
         public static Blog Create(
             Guid UserId
@@ -57,12 +59,22 @@ namespace Blogging.Modules.Blog.Domain.Blogs
                 Like = 0,
                 Dislike = 0,
                 State = BlogState.Draft,
+                IsPublicVisible = false,
+                IsInternalVisible = true,
                 _blogState = new DraftState(BlogState.Draft)
             };
             blog.Raise(new BlogCreatedDomainEvent(blog.Id));
             return blog;
         }
-        public void SetBlogState(BlogState blogState)
+        internal void SetBlogInternalVisible(bool visible)
+        {
+            IsInternalVisible = visible;
+        }
+        internal void SetBlogPublicVisible(bool visible)
+        {
+            IsPublicVisible = visible;
+        }
+        internal void SetBlogState(BlogState blogState)
         {
             BlogStateInstance = BlogStateFactory.CreateState(blogState);
             State = blogState;
@@ -98,10 +110,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
         }
         public Result Hide()
         {
-            if (State == BlogState.Draft 
-                || State == BlogState.Modifying 
-                || State == BlogState.Hide
-                || State == BlogState.Publish)
+            if (State == BlogState.Hide)
                 return Result.Failure(BlogErrors.InvaldStateToProcess(Id, State, nameof(Hide)));
 
             BlogStateInstance.Hide(this);

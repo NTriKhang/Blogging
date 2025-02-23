@@ -9,6 +9,8 @@
         public override void Publish(Blog blog)
         {
             _state = BlogState.Review;
+            blog.SetBlogInternalVisible(true);
+            blog.SetBlogPublicVisible(false);
             blog.SetBlogState(_state);
         }
     }

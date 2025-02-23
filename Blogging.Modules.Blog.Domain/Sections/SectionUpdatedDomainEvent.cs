@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Blogging.Modules.Blog.Domain.Sections
 {
-    public sealed class SectionCreatedDomainEvent(
+    public sealed class SectionUpdatedDomainEvent(
         Guid sectionId
         , Guid userId
-        , string content
-        , string title) : DomainEvent
+        , string title
+        , string content) : DomainEvent
     {
         public Guid SectionId { get; init; } = sectionId;
         public Guid UserId { get; init; } = userId;
-        public string Content { get; init; } = content;
         public string Title { get; init; } = title;
+        public string Content { get; init; } = content;
     }
 }

@@ -37,20 +37,19 @@ namespace Blogging.Modules.Blog.Domain.Sections
                 Content = content
             };
 
-            section.Raise(new SectionCreatedDomainEvent( section.Id, userId, section.Content ));
+            section.Raise(new SectionCreatedDomainEvent( section.Id, userId, section.Content, section.Title ));
 
             return section;
         }
         public void Update(
-            string title
+            Guid userId
+            , string title
             , string content)
         {
             if (Title == title && Content == content)
                 return;
 
-            Title = title;
-            Content = content;
-            UDate = DateTime.UtcNow;
+            Raise(new SectionUpdatedDomainEvent(Id, userId, title, content));
         }
         public void SwapOrder(Section swapSection)
         {

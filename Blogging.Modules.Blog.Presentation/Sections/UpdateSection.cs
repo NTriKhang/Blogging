@@ -14,7 +14,9 @@ namespace Blogging.Modules.Blog.Presentation.Sections
         {
             app.MapPut("section", async (UpdateSectionRequest request, ISender sender) =>
             {
-                var cmd = new UpdateSectionCommand(request.Id
+                var cmd = new UpdateSectionCommand(
+                    request.Id
+                    , request.UserId
                     , request.Title
                     , request.Content);
 
@@ -24,6 +26,7 @@ namespace Blogging.Modules.Blog.Presentation.Sections
             }).WithTags(Tags.Sections);
         }
         internal sealed record UpdateSectionRequest(Guid Id
+            , Guid UserId
             , string Title
             , string Content);
     }

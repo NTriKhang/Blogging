@@ -17,20 +17,30 @@ namespace Blogging.Modules.Blog.Application.Contributes.CreateContribute
         IContributeRepository contributeRepository
         , IContributeContentRepository contributeContentRepository
         , IUnitOfWork unitOfWork)
-        : INotificationHandler<SectionCreatedDomainEvent>
+        : INotificationHandler<SectionUpdatedDomainEvent>, INotificationHandler<SectionCreatedDomainEvent>
     {
+        public async Task Handle(SectionUpdatedDomainEvent notification, CancellationToken cancellationToken)
+        {
+            await CreateContribute(notification.UserId, notification.SectionId, notification.Content, notification.Title);
+        }
+
         public async Task Handle(SectionCreatedDomainEvent notification, CancellationToken cancellationToken)
         {
+            await CreateContribute(notification.UserId, notification.SectionId, notification.Content, notification.Title);
+        }
+        private async Task CreateContribute(Guid UserId, Guid SectionId, string Content, string Title)
+        {
             var contribute = Contribute.Create(
-                notification.UserId
-                , notification.SectionId
-                , notification.Content);
+            UserId
+            , SectionId
+            , Content
+            , Title);
 
             contributeRepository.Insert(contribute);
 
             var contributeContent = ContributeContent.Create(
                 contribute.Id
-                , notification.Content);
+                , Content);
 
             contributeContentRepository.Insert(contributeContent);
 
