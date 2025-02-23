@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using Quartz;
 
-namespace Blogging.Modules.User.Infrastructure.Outbox
+namespace Blogging.Modules.Blog.Infrastructure.Outbox
 {
     internal sealed class ConfigureProcessOutboxJob : ConfigureProcessOutboxJobBase<OutboxOptions>
     {

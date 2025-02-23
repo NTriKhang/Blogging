@@ -10,5 +10,6 @@ namespace Blogging.Modules.Blog.Presentation
     {
         internal const string Users = "Users";
         internal const string Blogs = "Blogs";
+        internal const string Sections = "Sections";
     }
 }

@@ -4,6 +4,8 @@ using Blogging.Modules.Blog.Application.Abtractions.Data;
 using Blogging.Modules.Blog.Domain.Blogs;
 using Blogging.Modules.Blog.Domain.Users;
 using Blogging.Modules.Blog.Infrastructure.Blogs;
+using Blogging.Modules.Blog.Infrastructure.Contribute;
+using Blogging.Modules.Blog.Infrastructure.Sections;
 using MassTransit.Middleware;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,11 +20,18 @@ namespace Blogging.Modules.Blog.Infrastructure.Database
     {
         internal DbSet<Domain.Users.User> Users { get; set; }
         internal DbSet<Domain.Blogs.Blog> Blogs { get; set; }
+        internal DbSet<Domain.Sections.Section> Sections { get; set; }
+        internal DbSet<Domain.Contributes.Contribute> Contributes { get; set; }
+        internal DbSet<Domain.Contributes.ContributeContent> ContributeContents { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(Schemas.Blog);
 
             modelBuilder.ApplyConfiguration(new BlogConfiguration());
+            modelBuilder.ApplyConfiguration(new SectionConfiguration());
+            modelBuilder.ApplyConfiguration(new ContributeConfiguration());
+            modelBuilder.ApplyConfiguration(new ContributeContentConfiguration());
 
             modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
             modelBuilder.ApplyConfiguration(new OutboxMessageConsumerConfiguration());

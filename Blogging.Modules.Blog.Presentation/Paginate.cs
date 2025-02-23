@@ -8,6 +8,7 @@ namespace Blogging.Modules.Blog.Presentation
 {
     internal static class Paginate
     {
-        public const int BlogPerPage = 20;
+        public const int BlogPerPage = 10;
+        public const int SectionPerPage = 20;
     }
 }

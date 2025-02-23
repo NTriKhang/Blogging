@@ -3,6 +3,7 @@ using System;
 using Blogging.Modules.Blog.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    partial class BlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250219052616_AddSectionTable")]
+    partial class AddSectionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,66 +167,6 @@ namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
                     b.ToTable("Blogs", "Blog");
                 });
 
-            modelBuilder.Entity("Blogging.Modules.Blog.Domain.Contributes.Contribute", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("CloseDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsClosed")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("SectionId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("UDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SectionId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Contributes", "Blog");
-                });
-
-            modelBuilder.Entity("Blogging.Modules.Blog.Domain.Contributes.ContributeContent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("ContributeId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContributeId");
-
-                    b.ToTable("ContributeContents", "Blog");
-                });
-
             modelBuilder.Entity("Blogging.Modules.Blog.Domain.Sections.Section", b =>
                 {
                     b.Property<Guid>("Id")
@@ -296,30 +239,6 @@ namespace Blogging.Modules.Blog.Infrastructure.Database.Migrations
                     b.HasOne("Blogging.Modules.Blog.Domain.Users.User", null)
                         .WithMany()
                         .HasForeignKey("ContributorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Blogging.Modules.Blog.Domain.Contributes.Contribute", b =>
-                {
-                    b.HasOne("Blogging.Modules.Blog.Domain.Sections.Section", null)
-                        .WithMany()
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Blogging.Modules.Blog.Domain.Users.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Blogging.Modules.Blog.Domain.Contributes.ContributeContent", b =>
-                {
-                    b.HasOne("Blogging.Modules.Blog.Domain.Contributes.Contribute", null)
-                        .WithMany()
-                        .HasForeignKey("ContributeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

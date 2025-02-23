@@ -44,8 +44,6 @@ namespace Blogging.Common.Infrastructure
                     configureConsumers(configure);
                 }
 
-                //configure.SetKebabCaseEndpointNameFormatter();
-
                 configure.UsingInMemory((context, cfg) =>
                 {
                     cfg.ConfigureEndpoints(context);

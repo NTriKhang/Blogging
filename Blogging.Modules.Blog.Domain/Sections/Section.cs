@@ -20,21 +20,43 @@ namespace Blogging.Modules.Blog.Domain.Sections
         public DateTime UDate { get; private set; }
         public static Section Create(
             Guid blogId
+            , Guid userId
             , string title
             , string content
             , int order
          )
         {
-            Section blog = new Section()
+            Section section = new Section()
             {
                 Id = Guid.NewGuid(),
+                BlogId = blogId,
                 Title = title,
                 CDate = DateTime.UtcNow,
                 UDate = DateTime.UtcNow,
                 Order = order,
                 Content = content
             };
-            return blog;
+
+            section.Raise(new SectionCreatedDomainEvent( section.Id, userId, section.Content ));
+
+            return section;
+        }
+        public void Update(
+            string title
+            , string content)
+        {
+            if (Title == title && Content == content)
+                return;
+
+            Title = title;
+            Content = content;
+            UDate = DateTime.UtcNow;
+        }
+        public void SwapOrder(Section swapSection)
+        {
+            int a = swapSection.Order;
+            swapSection.Order = Order;
+            Order = a;
         }
     }
 }

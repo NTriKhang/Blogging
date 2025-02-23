@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blogging.Modules.User.Infrastructure.Outbox
+namespace Blogging.Modules.Blog.Infrastructure.Outbox
 {
     internal sealed class OutboxOptions : OutboxOptionsBase
     {
-        public override string JobName
-        {
-            get => typeof(ProcessOutbox).FullName!;
+        public override string JobName 
+        { 
+            get => typeof(ProcessOutbox).FullName!; 
         }
-        public override Type JobType
-        {
-            get => typeof(ProcessOutbox);
+        public override Type JobType 
+        { 
+            get => typeof(ProcessOutbox); 
         }
     }
 }

@@ -59,6 +59,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
                 State = BlogState.Draft,
                 _blogState = new DraftState(BlogState.Draft)
             };
+            blog.Raise(new BlogCreatedDomainEvent(blog.Id));
             return blog;
         }
         public void SetBlogState(BlogState blogState)
@@ -113,7 +114,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
                 return Result.Failure(BlogErrors.ContributorAlreadyExist(Id, user.Id));
             _contributors.Add(user);
 
-            Raise(new BlogContributorAdded(Id, user.Id));
+            Raise(new BlogContributorAddedDomainEvent(Id, user.Id));
 
             return Result.Success();
         }
@@ -123,7 +124,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
                 return Result.Failure(BlogErrors.ContributorDoesNotExist(Id, user.Id));
             _contributors.Remove(user);
 
-            Raise(new BlogContributorRemoved(Id, user.Id));
+            Raise(new BlogContributorRemovedDomainEvent(Id, user.Id));
 
             return Result.Success();
         }

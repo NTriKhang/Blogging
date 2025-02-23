@@ -3,8 +3,6 @@ using Blogging.Common.Domain;
 using Blogging.Common.Infrastructure.Outbox;
 using Blogging.Common.Infrastructure.Serialization;
 using Dapper;
-using MassTransit.Configuration;
-using MassTransit.DependencyInjection;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -18,50 +16,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blogging.Modules.User.Infrastructure.Outbox
+namespace Blogging.Common.Infrastructure.Outbox
 {
-    internal sealed class ProcessOutbox(IDbConnectionFactory dbConnectionFactory
+    public class ProcessOutboxBase<TOutboxOptions>(
+        IDbConnectionFactory dbConnectionFactory
         , IServiceScopeFactory serviceScopeFactory
-        , IOptions<OutboxOptions> outboxOptions) : IJob
+        , IOptions<TOutboxOptions> outboxOptions
+        , string schema)
+        : IJob
+        where TOutboxOptions : OutboxOptionsBase
     {
         public async Task Execute(IJobExecutionContext context)
         {
-            using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
-            using DbTransaction transaction = await connection.BeginTransactionAsync();
+            using DbConnection dbConnection = await dbConnectionFactory.OpenConnectionAsync();
+            using DbTransaction transaction = await dbConnection.BeginTransactionAsync();
 
-            var outboxMessages = await GetOutboxMessagesAsync(connection, transaction);
-
-            foreach(OutboxMessageResponse outboxMessage in outboxMessages)
+            var outboxMessages = await GetOutboxMessagesAsync(dbConnection, transaction);
+            Exception? cauthException = null;
+            foreach (var outboxMessage in outboxMessages)
             {
-                Exception? exception = null;
+                Exception? caughtException = null;
                 try
                 {
-                    IDomainEvent domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(outboxMessage.Content,
-                        SerializerSetting.Instances)!;
+                    IDomainEvent domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(outboxMessage.Content
+                        , SerializerSetting.Instances)!;
 
-                    using IServiceScope scope = serviceScopeFactory.CreateScope();
-                    IPublisher publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
+                    using var scope = serviceScopeFactory.CreateScope();
+                    var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
 
                     await publisher.Publish(domainEvent);
                 }
-                catch (Exception caughtException)
+                catch (Exception ex)
                 {
-                    exception = caughtException;
+                    cauthException = ex;
+                    Console.WriteLine(ex.Message);
                 }
-                await UpdateOutboxMessageAsync(connection, transaction, outboxMessage, exception);
+                await UpdateOutboxMessageAsync(dbConnection, transaction, outboxMessage, cauthException);
             }
-
             await transaction.CommitAsync();
         }
+           
         private async Task UpdateOutboxMessageAsync(
             IDbConnection connection,
             IDbTransaction transaction,
             OutboxMessageResponse outboxMessage,
             Exception? exception)
         {
-            const string sql =
-                """
-            UPDATE "users"."OutboxMessage"
+            string sql =
+                $"""
+            UPDATE "{schema}"."OutboxMessage"
             SET "ProcessedOnUtc" = @ProcessedOnUtc,
                 "Error" = @Error
             WHERE "Id" = @Id
@@ -86,7 +89,7 @@ namespace Blogging.Modules.User.Infrastructure.Outbox
              SELECT
                 "Id" AS {nameof(OutboxMessageResponse.Id)},
                 "Content" AS {nameof(OutboxMessageResponse.Content)}
-             FROM "users"."OutboxMessage"
+             FROM "{schema}"."OutboxMessage"
              WHERE "ProcessedOnUtc" IS NULL
              ORDER BY "OccuredOnUtc"
              LIMIT {outboxOptions.Value.BatchSize}
@@ -95,6 +98,6 @@ namespace Blogging.Modules.User.Infrastructure.Outbox
             IEnumerable<OutboxMessageResponse> res = await dbConnection.QueryAsync<OutboxMessageResponse>(sql
                 , transaction: transaction);
             return res.ToList();
-        } 
+        }
     }
 }
