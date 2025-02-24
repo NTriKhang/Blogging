@@ -11,6 +11,5 @@ namespace Blogging.Modules.Blog.Application.Section.CreateSection
         Guid BlogId
         , Guid UserId
         , string Title
-        , string Content
-        , int Order) : ICommand<Guid>;
+        , string Content) : ICommand<Guid>;
 }

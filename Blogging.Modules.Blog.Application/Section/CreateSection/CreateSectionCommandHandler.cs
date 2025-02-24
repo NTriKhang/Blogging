@@ -8,34 +8,30 @@ using Blogging.Modules.Blog.Domain.Users;
 namespace Blogging.Modules.Blog.Application.Section.CreateSection
 {
     internal sealed record CreateSectionCommandHandler(
-        IUnitOfWork unitOfWork
-        , IUserRepository userRepository
-        , ISectionRepository sectionRepository
-        , IBlogRepository blogRepository) : ICommandHandler<CreateSectionCommand, Guid>
+        IUnitOfWork unitOfWork,
+        IUserRepository userRepository,
+        ISectionRepository sectionRepository,
+        IBlogRepository blogRepository) : ICommandHandler<CreateSectionCommand, Guid>
     {
         public async Task<Result<Guid>> Handle(CreateSectionCommand request, CancellationToken cancellationToken)
         {
-            var blogTask = blogRepository.GetByIdAsync(request.BlogId);
-            var userTask = userRepository.GetByIdAsync(request.UserId);
-
-            await Task.WhenAll([blogTask, userTask]);
-            var blog = blogTask.Result;
-            var user = userTask.Result;
+            var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken: cancellationToken);
+            var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken: cancellationToken);
 
             if (blog is null)
                 return Result.Failure<Guid>(BlogErrors.NotFound(request.BlogId));
 
-            if(user is null)
+            if (user is null)
                 return Result.Failure<Guid>(UserErrors.NotFound(request.UserId));
 
-            var section = Domain.Sections.Section.Create(request.BlogId
-                , request.UserId
-                , request.Title
-                , request.Content
-                , request.Order);
+            var section = Domain.Sections.Section.Create(
+                request.BlogId,
+                request.UserId,
+                request.Title,
+                request.Content);
 
             sectionRepository.Insert(section);
-            await unitOfWork.SaveChangesAsync();
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return section.Id;
         }

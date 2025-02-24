@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,9 @@ namespace Blogging.Modules.Blog.Infrastructure.Sections
             builder.HasIndex(s => new { s.BlogId, s.Order }).IsUnique();
 
             builder.HasOne<Domain.Blogs.Blog>().WithMany().HasForeignKey(s => s.BlogId);
+
+            builder.Property(s => s.Order)
+                .ValueGeneratedOnAdd();
         }
     }
 }

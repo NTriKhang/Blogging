@@ -23,7 +23,6 @@ namespace Blogging.Modules.Blog.Domain.Sections
             , Guid userId
             , string title
             , string content
-            , int order
          )
         {
             Section section = new Section()
@@ -33,13 +32,18 @@ namespace Blogging.Modules.Blog.Domain.Sections
                 Title = title,
                 CDate = DateTime.UtcNow,
                 UDate = DateTime.UtcNow,
-                Order = order,
                 Content = content
             };
 
             section.Raise(new SectionCreatedDomainEvent( section.Id, userId, section.Content, section.Title ));
 
             return section;
+        }
+        public void ChangeSectionOrder(int newOrder)
+        {
+            if(Order == newOrder) return;
+
+            Order = newOrder;
         }
         public void Update(
             Guid userId
@@ -50,12 +54,6 @@ namespace Blogging.Modules.Blog.Domain.Sections
                 return;
 
             Raise(new SectionUpdatedDomainEvent(Id, userId, title, content));
-        }
-        public void SwapOrder(Section swapSection)
-        {
-            int a = swapSection.Order;
-            swapSection.Order = Order;
-            Order = a;
         }
     }
 }

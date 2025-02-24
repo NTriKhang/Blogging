@@ -11,5 +11,7 @@ namespace Blogging.Modules.Blog.Domain.Sections
     {
         public static Error NotFound(Guid Id) =>
             Error.NotFound("Sections.NotFound", $"Section with the identifier {Id} is not found");
+        public static Error NotInTheSameBlog(Guid SectionA, Guid SectionB) =>
+            Error.Problem("Sections.NotInTheSameBlog", $"Section {SectionA} is not the same blog with section {SectionB}");
     }
 }

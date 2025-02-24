@@ -1,6 +1,7 @@
 ﻿using Blogging.Common.Application.EventBus;
 using Blogging.Common.Infrastructure.Outbox;
 using Blogging.Modules.Blog.Application.Abtractions.Data;
+using Blogging.Modules.Blog.Application.Section;
 using Blogging.Modules.Blog.Domain.Blogs;
 using Blogging.Modules.Blog.Domain.Contributes;
 using Blogging.Modules.Blog.Domain.Sections;
@@ -71,8 +72,8 @@ namespace Blogging.Modules.Blog.Infrastructure
             , IConfiguration configuration)
         {
             services.AddDbContext<BlogDbContext>((sp, op) =>
-                op.
-                UseNpgsql(configuration.GetConnectionString("Database"))
+                op
+                .UseNpgsql(configuration.GetConnectionString("Database"))
                 .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesinterceptor>())
             );
 
@@ -82,6 +83,8 @@ namespace Blogging.Modules.Blog.Infrastructure
             services.AddScoped<ISectionRepository, SectionRepository>();
             services.AddScoped<IContributeRepository, ContributeRepository>();
             services.AddScoped<IContributeContentRepository, ContributeContentRepository>();
+
+            services.AddScoped<ISectionService, SectionService>();
 
             services.Configure<InboxOptions>(configuration.GetSection("Inbox"));
             services.ConfigureOptions<ConfigureProcessInboxJob>();

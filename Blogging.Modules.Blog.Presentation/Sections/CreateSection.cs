@@ -21,8 +21,7 @@ namespace Blogging.Modules.Blog.Presentation.Sections
                 var cmd = new CreateSectionCommand(request.BlogId
                     , request.UserId
                     , request.Title
-                    , request.Content
-                    , request.Order);
+                    , request.Content);
 
                 var res = await sender.Send(cmd);
 
@@ -32,7 +31,6 @@ namespace Blogging.Modules.Blog.Presentation.Sections
         internal sealed record CreateSectionRequest(Guid BlogId
             , Guid UserId
             , string Title
-            , string Content
-            , int Order);
+            , string Content);
     }
 }
