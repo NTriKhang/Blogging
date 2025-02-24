@@ -13,7 +13,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
     public sealed class Blog : Entity
     {
         private readonly HashSet<Users.User> _contributors = new();
-        private IBlogState _blogState;
+        private IBlogState? _blogState;
         private IBlogState BlogStateInstance
         {
             get
@@ -82,7 +82,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
         public Result Publish()
         {
             if (State == BlogState.Publish)
-                return Result.Failure(BlogErrors.InvaldStateToProcess(Id, State, nameof(Publish)));
+                return Result.Failure(BlogErrors.InvalidStateToProcess(Id, State, nameof(Publish)));
 
             BlogStateInstance.Publish(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
@@ -91,7 +91,7 @@ namespace Blogging.Modules.Blog.Domain.Blogs
         public Result UnPublish()
         {
             if (State == BlogState.Draft || State == BlogState.Modifying || State == BlogState.Hide)
-                return Result.Failure(BlogErrors.InvaldStateToProcess(Id, State, nameof(UnPublish)));
+                return Result.Failure(BlogErrors.InvalidStateToProcess(Id, State, nameof(UnPublish)));
 
             BlogStateInstance.UnPublish(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
@@ -99,10 +99,10 @@ namespace Blogging.Modules.Blog.Domain.Blogs
         }
         public Result Modify()
         {
-            if (State == BlogState.Draft 
-                || State == BlogState.Modifying 
+            if (State == BlogState.Draft
+                || State == BlogState.Modifying
                 || State == BlogState.Review)
-                return Result.Failure(BlogErrors.InvaldStateToProcess(Id, State, nameof(Modify)));
+                return Result.Failure(BlogErrors.InvalidStateToProcess(Id, State, nameof(Modify)));
 
             BlogStateInstance.Modify(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
@@ -111,12 +111,23 @@ namespace Blogging.Modules.Blog.Domain.Blogs
         public Result Hide()
         {
             if (State == BlogState.Hide)
-                return Result.Failure(BlogErrors.InvaldStateToProcess(Id, State, nameof(Hide)));
+                return Result.Failure(BlogErrors.InvalidStateToProcess(Id, State, nameof(Hide)));
 
             BlogStateInstance.Hide(this);
             Raise(new BlogStateUpdatedDomainEvent(Id, State));
             return Result.Success();
         }
+        public Result UnHide(BlogState targetState)
+        {
+            if (State != BlogState.Hide || targetState == BlogState.Modifying)
+                return Result.Failure(BlogErrors.InvalidStateToProcess(Id, State, nameof(UnHide)));
+
+            BlogStateInstance = BlogStateFactory.CreateState(targetState);
+            BlogStateInstance.UnHide(this);
+            Raise(new BlogStateUpdatedDomainEvent(Id, State));
+            return Result.Success();
+        }
+
         public Result AddContributor(User user)
         {
             if (_contributors.Contains(user))

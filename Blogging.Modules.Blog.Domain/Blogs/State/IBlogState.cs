@@ -6,5 +6,6 @@
         void UnPublish(Blog blog);
         void Modify(Blog blog);
         void Hide(Blog blog);
+        void UnHide(Blog blog);
     }
 }

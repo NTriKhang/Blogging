@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Blogging.Modules.Blog.Domain.Blogs
 {
-    internal sealed class BlogContributorAddedDomainEvent(Guid blogId
+    public sealed class BlogContributorAddedDomainEvent(Guid blogId
         , Guid userId) : DomainEvent
     {
         public Guid BlogId { get; init; } = blogId;

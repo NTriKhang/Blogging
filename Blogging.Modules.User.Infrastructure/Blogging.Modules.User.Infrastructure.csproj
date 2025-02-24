@@ -10,6 +10,7 @@
     <ProjectReference Include="..\Blogging.Common.Infrastructure\Blogging.Common.Infrastructure.csproj" />
     <ProjectReference Include="..\Blogging.Common.Presentation\Blogging.Common.Presentation.csproj" />
     <ProjectReference Include="..\Blogging.Modules.User.Application\Blogging.Modules.User.Application.csproj" />
+    <ProjectReference Include="..\Blogging.Modules.User.IntegrationEvent\Blogging.Modules.User.IntegrationEvent.csproj" />
     <ProjectReference Include="..\Blogging.Modules.User.Presentation\Blogging.Modules.User.Presentation.csproj" />
   </ItemGroup>
 

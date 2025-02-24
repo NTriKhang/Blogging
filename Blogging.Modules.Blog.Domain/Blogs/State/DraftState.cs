@@ -13,5 +13,12 @@
             blog.SetBlogPublicVisible(false);
             blog.SetBlogState(_state);
         }
+        public override void UnHide(Blog blog)
+        {
+            _state = BlogState.Draft;
+            blog.SetBlogPublicVisible(false);
+            blog.SetBlogInternalVisible(true);
+            blog.SetBlogState(_state);
+        }
     }
 }

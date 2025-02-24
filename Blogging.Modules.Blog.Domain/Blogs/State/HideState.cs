@@ -5,5 +5,8 @@
         public HideState(BlogState state) : base(state)
         {
         }
+        public override void UnHide(Blog blog)
+        {
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Blogging.Modules.Blog.Domain.Blogs
 {
-    internal sealed class BlogContributorRemovedDomainEvent(
+    public sealed class BlogContributorRemovedDomainEvent(
         Guid blogId
         , Guid userId) : DomainEvent
     {
