@@ -24,4 +24,5 @@ a blogging system apply DDD pattern and Modular Monolith Architecture. I will se
 
 24/07/2025
 - I am adding a bunch of use case, it's not that much but 9 days ... hmm, I should blame myself for this performance. Luckily I think I have covered about 75% of this module.
-- Next: I will try to write some unit test for blog state operation ( publish, unpublish, modify, hide ).
+- Next: I will try to write some unit test for blog function.
+- ( Update ) I push unit test for blog function, I don't think it 100% cover all cases but maybe 70-80% :D And I did have a bug in my code @_@. When I complete this module, maybe I should jump to write some FE code.
