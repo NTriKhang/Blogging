@@ -21,3 +21,7 @@ a blogging system apply DDD pattern and Modular Monolith Architecture. I will se
 15/02/2025
 - Refactoring some code, not too much work for today.
 - Next: Keep work with blog module.
+
+24/07/2025
+- I am adding a bunch of use case, it's not that much but 9 days ... hmm, I should blame myself for this performance. Luckily I think I have covered about 75% of this module.
+- Next: I will try to write some unit test for blog state operation ( publish, unpublish, modify, hide ).
